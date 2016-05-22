@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  </head>
+  <body>
+
+
+    <div id="example"></div>
+
+    <div id="todo-app-container"></div>
+
+    <script type="text/babel">      
+      var Timer = React.createClass({
+        getInitialState: function() {
+          return {secondsElapsed: 0};
+        },
+        tick: function() {
+          this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+        },
+        componentDidMount: function() {
+          this.interval = setInterval(this.tick, 1000);
+        },
+        componentWillUnmount: function() {
+          clearInterval(this.interval);
+        },
+        render: function() {
+          console.info('rendering the timer');
+          return (
+            <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <Timer />,
+        document.getElementById('example')
+      )
+
+    </script>
+    <script type="text/babel">
+      var TodoListItem = React.createClass({
+        render: function(){
+          return (
+            <li className="todo-list-item">{this.props.text}</li>
+          )
+        }
+      });
+      var TodoList = React.createClass({
+        render: function(){
+          return (
+            <ul className="todo-list">
+              <TodoListItem text="Get a Haircut"/>
+              <TodoListItem text="Check balance"/>
+            </ul>
+          )
+        }
+      });
+      var TodoApp = React.createClass({
+        render: function(){
+          return (
+            <div>
+              <h3>TODOS</h3>
+              <div className="todo-app-content">
+                Todos list will come here
+                <TodoList/>
+              </div>
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <TodoApp/>,
+        document.getElementById('todo-app-container')
+      )
+    </script>
+
+    <style type="text/css">
+      #todo-app-container{
+        border: 1px solid black;
+        height: 300px;
+        width: 200px;
+        float: right;
+      }
+      .todo-app-content{
+        border: 1px dashed red;
+      }
+      #todo-app-container h3{
+        padding-left: 10px;
+      }
+    </style>
+  </body>
+</html>
